@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61ed354d78ee8f42846b782fb6fddc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeprefab: {fileID: 3318308014666446855, guid: 5b91210c6c1e1e946a46a3a685861efe, type: 3}
+  nodeprefab: {fileID: 7775494344634830348, guid: 5b91210c6c1e1e946a46a3a685861efe, type: 3}
   nodePositiontxt: {fileID: 4900000, guid: 2f9c9a5d8236148499ac070d95f97f49, type: 3}
   arrayNodePositions: []
   CurrentNodePositions: []
