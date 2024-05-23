@@ -248,6 +248,9 @@ MonoBehaviour:
   nodePositiontxt: {fileID: 4900000, guid: 2f9c9a5d8236148499ac070d95f97f49, type: 3}
   arrayNodePositions: []
   CurrentNodePositions: []
+  nodeConectionstxt: {fileID: 4900000, guid: fb58f4043d669614bb328bd7cb3167be, type: 3}
+  arrayNodeconections: []
+  currentNodeconections: []
   AllNodes: []
 --- !u!4 &590874332
 Transform:
