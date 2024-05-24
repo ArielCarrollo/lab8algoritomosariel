@@ -14,11 +14,14 @@ public class GraphController : MonoBehaviour
     //public SimplyLinkedList<GameObject> Allnodes;
     public List<GameObject> AllNodes;
 
+    public EnemyController enemy;
+
     // Start is called before the first frame update
     void Start()
     {
         CreateNodes();
         CreateConections();
+        SelectinitialNode();
     }
     void CreateNodes()
     {
@@ -49,5 +52,10 @@ public class GraphController : MonoBehaviour
                 }
             }
         }
+    }
+    void SelectinitialNode()
+    {
+        int index = Random.Range(0, AllNodes.Count);
+        enemy.objetive = AllNodes[index];
     }
 }

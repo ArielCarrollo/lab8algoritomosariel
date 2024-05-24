@@ -20,4 +20,9 @@ public class NodeControl : MonoBehaviour
     {
         adjacentNode.Add(node);
     }
+    public NodeControl SelectrandomAdjacent()
+    {
+        int index = Random.Range(0, adjacentNode.Count);
+        return adjacentNode[index];
+    }
 }

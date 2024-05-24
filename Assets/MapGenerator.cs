@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
+    public Sprite[] Allsprites;
     [SerializeField] private GameObject mapPrefab;
     [SerializeField] private TextAsset maptxt;
     [SerializeField] private string[] AllMapString;
@@ -24,7 +25,7 @@ public class MapGenerator : MonoBehaviour
                     Vector2 position = new Vector2(InitialPosition.x + posSeparation * j, InitialPosition.y - posSeparation * i);
                     GameObject tmp = Instantiate(mapPrefab, position, transform.rotation);
                     tmp.transform.SetParent(this.gameObject.transform);
-                    
+                    tmp.GetComponent<partMapControl>().SetSprite(Allsprites[int.Parse(currentLineString[j])]);
                 }
             }
         }
