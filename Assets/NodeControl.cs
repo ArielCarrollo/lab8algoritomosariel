@@ -5,16 +5,18 @@ using UnityEngine;
 public class NodeControl : MonoBehaviour
 {
     public List<NodeControl> adjacentNode;
+    public int nodeWeight; // Agregamos un peso al nodo
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        nodeWeight = Random.Range(1, 10); // Asignamos un peso aleatorio al nodo
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void AddadjacentNodes(NodeControl node)
     {
@@ -26,3 +28,4 @@ public class NodeControl : MonoBehaviour
         return adjacentNode[index];
     }
 }
+
