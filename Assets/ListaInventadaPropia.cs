@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ListaInventadaPropia<T> : MonoBehaviour
+public class ListaInventadaPropia<T> 
 {
     public class Node
     {
