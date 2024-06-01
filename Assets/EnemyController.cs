@@ -6,8 +6,9 @@ public class EnemyController : MonoBehaviour
 {
     public GameObject objetive;
     public Vector2 SpeedReference;
-    public int energy = 100; // Agregamos una variable de energía
-    public bool isResting = false; // Agregamos un estado de descanso
+    public int energy = 100; 
+    public bool isResting = false;
+    private GameObject lastVisitedNode;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isResting) // Si el enemigo no está descansando
+        if (!isResting) 
         {
             transform.position = Vector2.SmoothDamp(transform.position, objetive.transform.position, ref SpeedReference, 0.5f);
         }
@@ -27,10 +28,10 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Node")
         {
-            energy -= collision.gameObject.GetComponent<NodeControl>().nodeWeight; // Restamos la energía del enemigo
-            if (energy <= 0) // Si la energía del enemigo es 0 o menos
+            energy -= collision.gameObject.GetComponent<NodeControl>().nodeWeight; 
+            if (energy <= 0) 
             {
-                StartCoroutine(Rest()); // El enemigo descansa
+                StartCoroutine(Rest()); 
             }
             else
             {
@@ -39,13 +40,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    IEnumerator Rest() // Corrutina para descansar
+    IEnumerator Rest() 
     {
         isResting = true;
-        yield return new WaitForSeconds(5); // Descansa durante 5 segundos
-        energy = 100; // Recupera toda su energía
+        yield return new WaitForSeconds(5); 
+        energy = 100;
         isResting = false;
-        objetive = objetive.GetComponent<NodeControl>().SelectrandomAdjacent().gameObject; // Selecciona un nuevo objetivo después de descansar
+        objetive = objetive.GetComponent<NodeControl>().SelectrandomAdjacent().gameObject; 
     }
 }
 

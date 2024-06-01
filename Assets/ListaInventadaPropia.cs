@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,24 +15,24 @@ public class ListaInventadaPropia<T>
             Next = null;
         }
     }
-    Node Head;
-    public int length = 0;
+
+    private Node Head;
+    public int Length { get; private set; } = 0;
+
+    public ListaInventadaPropia()
+    {
+        Head = null;
+        Length = 0;
+    }
+
     public void InsertNodeAtStart(T value)
     {
-        if (Head == null)
-        {
-            Node newNode = new Node(value);
-            Head = newNode;
-            length = length + 1;
-        }
-        else
-        {
-            Node newNode = new Node(value);
-            newNode.Next = Head;
-            Head = newNode;
-            length = length + 1;
-        }
+        Node newNode = new Node(value);
+        newNode.Next = Head;
+        Head = newNode;
+        Length++;
     }
+
     public void InsertNodeAtEnd(T value)
     {
         if (Head == null)
@@ -45,41 +46,39 @@ public class ListaInventadaPropia<T>
             {
                 last = last.Next;
             }
-            Node newNode = new Node(value);
-            last.Next = newNode;
-            length = length + 1;
+            last.Next = new Node(value);
+            Length++;
         }
     }
+
     public void InsertNodeAtPosition(T value, int position)
     {
         if (position == 0)
         {
             InsertNodeAtStart(value);
         }
-        else if (position == length - 1)
+        else if (position == Length)
         {
             InsertNodeAtEnd(value);
         }
-        else if (position >= length)
+        else if (position > Length)
         {
             Debug.Log("No existe esa posición.");
         }
         else
         {
             Node previous = Head;
-            int iterator = 0;
-            while (iterator < position - 1)
+            for (int i = 0; i < position - 1; i++)
             {
                 previous = previous.Next;
-                iterator = iterator + 1;
             }
-            Node next = previous.Next;
             Node newNode = new Node(value);
+            newNode.Next = previous.Next;
             previous.Next = newNode;
-            newNode.Next = next;
-            length = length + 1;
+            Length++;
         }
     }
+
     public void ModifyAtStart(T value)
     {
         if (Head == null)
@@ -91,6 +90,7 @@ public class ListaInventadaPropia<T>
             Head.Value = value;
         }
     }
+
     public void ModifyAtEnd(T value)
     {
         if (Head == null)
@@ -107,43 +107,44 @@ public class ListaInventadaPropia<T>
             last.Value = value;
         }
     }
+
     public void ModifyAtPosition(T value, int position)
     {
         if (position == 0)
         {
             ModifyAtStart(value);
         }
-        else if (position == length - 1)
+        else if (position == Length)
         {
             ModifyAtEnd(value);
         }
-        else if (position >= length)
+        else if (position >= Length)
         {
             Debug.Log("No existe esa posición.");
         }
         else
         {
             Node nodePosition = Head;
-            int iterator = 0;
-            while (iterator < position)
+            for (int i = 0; i < position; i++)
             {
                 nodePosition = nodePosition.Next;
-                iterator = iterator + 1;
             }
             nodePosition.Value = value;
         }
     }
+
     public T ObtainNodeAtStart()
     {
         if (Head == null)
         {
-            throw new ("La lista está vacía.");
+            throw new Exception("La lista está vacía.");
         }
         else
         {
             return Head.Value;
         }
     }
+
     public T ObtainNodeAtEnd()
     {
         if (Head == null)
@@ -160,51 +161,55 @@ public class ListaInventadaPropia<T>
             return last.Value;
         }
     }
+
     public T ObtainNodeAtPosition(int position)
     {
         if (position == 0)
         {
             return ObtainNodeAtStart();
         }
-        else if (position == length - 1)
+        else if (position == Length - 1)
         {
             return ObtainNodeAtEnd();
         }
-        else if (position >= length)
+        else if (position >= Length)
         {
-            throw new ("No existe ese nodo en la lista.");
+            throw new Exception("No existe ese nodo en la lista.");
         }
         else
         {
             Node nodePosition = Head;
-            int iterator = 0;
-            while (iterator < position)
+            for (int i = 0; i < position; i++)
             {
                 nodePosition = nodePosition.Next;
-                iterator = iterator + 1;
             }
             return nodePosition.Value;
         }
     }
+
     public void DeleteAtStart()
     {
         if (Head == null)
         {
-            throw new ("Ñao ñao");
+            throw new Exception("La lista está vacía.");
         }
         else
         {
-            Node newHead = Head.Next;
-            Head.Next = null;
-            Head = newHead;
-            length = length - 1;
+            Head = Head.Next;
+            Length--;
         }
     }
+
     public void DeleteAtEnd()
     {
         if (Head == null)
         {
             DeleteAtStart();
+        }
+        else if (Head.Next == null)
+        {
+            Head = null;
+            Length--;
         }
         else
         {
@@ -213,44 +218,57 @@ public class ListaInventadaPropia<T>
             {
                 previousLastNode = previousLastNode.Next;
             }
-            Node lastNode = previousLastNode.Next;
-            lastNode = null;
             previousLastNode.Next = null;
-            length = length - 1;
+            Length--;
         }
     }
+
     public void DeleteNodeAtPosition(int position)
     {
         if (position == 0)
         {
             DeleteAtStart();
         }
-        else if (position == length - 1)
+        else if (position == Length - 1)
         {
             DeleteAtEnd();
         }
-        else if (position >= length)
+        else if (position >= Length)
         {
             Debug.Log("No existe ese nodo en la lista.");
         }
         else
         {
             Node previous = Head;
-            int iterator = 0;
-            while (iterator < position - 1)
+            for (int i = 0; i < position - 1; i++)
             {
                 previous = previous.Next;
-                iterator = iterator + 1;
             }
-            Node next = previous.Next.Next;
-            Node nodePosition = previous.Next;
-            nodePosition.Next = null;
-            nodePosition = null;
-            previous.Next = null;
-            previous.Next = next;
-            length = length - 1;
+            previous.Next = previous.Next.Next;
+            Length--;
         }
     }
+
+    public void Clear()
+    {
+        Head = null;
+        Length = 0;
+    }
+
+    public bool Contains(T value)
+    {
+        Node current = Head;
+        while (current != null)
+        {
+            if (current.Value.Equals(value))
+            {
+                return true;
+            }
+            current = current.Next;
+        }
+        return false;
+    }
+
     public void PrintAllNodes()
     {
         Node tmp = Head;
@@ -261,4 +279,15 @@ public class ListaInventadaPropia<T>
         }
         Debug.Log("");
     }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        Node current = Head;
+        while (current != null)
+        {
+            yield return current.Value;
+            current = current.Next;
+        }
+    }
 }
+

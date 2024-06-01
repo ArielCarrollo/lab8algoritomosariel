@@ -11,19 +11,19 @@ public class GraphController : MonoBehaviour
     public TextAsset nodeConectionstxt;
     public string[] arrayNodeconections;
     public string[] currentNodeconections;
-    //public SimplyLinkedList<GameObject> Allnodes;
-    public ListaInventadaPropia<GameObject> AllNodes; // Cambio aquí
+    public ListaInventadaPropia<GameObject> AllNodes;
 
     public EnemyController enemy;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        AllNodes = new ListaInventadaPropia<GameObject>(); // Nueva instancia de tu lista
+        AllNodes = new ListaInventadaPropia<GameObject>(); 
         CreateNodes();
         CreateConections();
         SelectinitialNode();
     }
+
     void CreateNodes()
     {
         if (nodePositiontxt != null)
@@ -33,12 +33,15 @@ public class GraphController : MonoBehaviour
             {
                 CurrentNodePositions = arrayNodePositions[i].Split(",");
                 Vector2 position = new Vector2(float.Parse(CurrentNodePositions[0]), float.Parse(CurrentNodePositions[1]));
+                int weight = int.Parse(CurrentNodePositions[2]); // El peso se asigna desde el graphGen.
                 GameObject tmp = Instantiate(nodeprefab, position, transform.rotation);
-                AllNodes.InsertNodeAtEnd(tmp); // Cambio aquí
-                //Allnodes.InsertNodeAtStart(tmp);
+                NodeControl nodeControl = tmp.GetComponent<NodeControl>();
+                nodeControl.nodeWeight = weight; // Asignar el peso al nodo
+                AllNodes.InsertNodeAtEnd(tmp);
             }
         }
     }
+
     void CreateConections()
     {
         if (nodeConectionstxt != null)
@@ -51,14 +54,16 @@ public class GraphController : MonoBehaviour
                 {
                     GameObject currentNode = AllNodes.ObtainNodeAtPosition(i);
                     GameObject adjacentNode = AllNodes.ObtainNodeAtPosition(int.Parse(currentNodeconections[j]));
-                    currentNode.GetComponent<NodeControl>().AddadjacentNodes(adjacentNode.GetComponent<NodeControl>()); // Cambio aquí
+                    currentNode.GetComponent<NodeControl>().AddadjacentNodes(adjacentNode.GetComponent<NodeControl>());
                 }
             }
         }
     }
+
     void SelectinitialNode()
     {
-        int index = Random.Range(0, AllNodes.length);
+        int index = Random.Range(0, AllNodes.Length);
         enemy.objetive = AllNodes.ObtainNodeAtPosition(index).gameObject; // Accede al gameObject del nodo
     }
 }
+
