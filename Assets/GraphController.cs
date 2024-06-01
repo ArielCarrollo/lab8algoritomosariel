@@ -63,7 +63,7 @@ public class GraphController : MonoBehaviour
     void SelectinitialNode()
     {
         int index = Random.Range(0, AllNodes.Length);
-        enemy.objetive = AllNodes.ObtainNodeAtPosition(index).gameObject; // Accede al gameObject del nodo
+        enemy.objetive = AllNodes.ObtainNodeAtPosition(index).gameObject; 
     }
 }
 
